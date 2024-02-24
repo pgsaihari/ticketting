@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import {app} from "./app"
 const start=async()=>{
+
+  
   if(!process.env.JWT_KEY){
     throw new Error("error in token generation")
   }
