@@ -1,0 +1,57 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+    rawYaml:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: saiharinarayan/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: saiharinarayan/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .
+    - image: saiharinarayan/tickets
+      context: ticketts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .             
+    - image: saiharinarayan/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile    
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.ts'
+    - image: saiharinarayan/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile    
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.ts' 
+    - image: saiharinarayan/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile    
+      sync:
+        manual:
+          - dest: .
+            src: 'src/**/*.ts'                  
